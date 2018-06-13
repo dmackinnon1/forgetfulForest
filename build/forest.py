@@ -109,14 +109,14 @@ def explanation1(actor, statement, lieDays, daysIfTrue, daysIfFalse, unionDays):
     else:
         exp1 += " could be " + prettyList(statement, "or")      
     exp1 += ". We know that " + actor + " lies on " + prettyList(lieDays, "and")
-    exp1 += ". So if they are telling the truth it can"
+    exp1 += ". So if "+ actor + " is telling the truth it can"
     if (len(daysIfTrue) == 0):
         exp1 += " not be any day (so they must be lying)"
     elif (len(daysIfTrue) == 1):
         exp1 += " only be " + daysIfTrue[0]    
     else:
         exp1 += " be " + prettyList(daysIfTrue, "or")
-    exp1 += ", and if they are lying, it can"
+    exp1 += ", and if "+ actor + " is lying, it can"
     if (len(daysIfFalse) == 0):
         exp1 += " not be any day (so they must be telling the truth)"
     elif (len(daysIfFalse) == 1):
