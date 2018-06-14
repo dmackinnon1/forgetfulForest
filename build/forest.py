@@ -58,7 +58,7 @@ allAnnotated.extend(annotatedVariations({'actor': 'Unicorn', 'state': 'truths', 
 allAnnotated.extend(individualDays())
 allAnnotated.extend(weekAndWeekend())
 
-def validPuzzle(lionStatement, unicornStatement, counter):
+def validPuzzle(lionStatement, unicornStatement):
     puzzle = {};
     lionPositive = intersect(lionStatement['days'], lionTruthful)
     lionNegative = intersect(otherDays(lionStatement['days']), lionLying)
@@ -78,7 +78,6 @@ def validPuzzle(lionStatement, unicornStatement, counter):
     else:
         puzzle['unicorn'] = ("The Unicorn says: " + unicornStatement['description'] + '.')
     puzzle['solution'] = validDays[0]
-    puzzle['id'] = counter
     puzzle['explanation'] = explanation1("Lion",lionStatement['days'], lionLying, lionPositive, lionNegative, lionDays)
     puzzle['explanation'] = puzzle['explanation'] + " "
     puzzle['explanation'] = puzzle['explanation'] + explanation1("Unicorn",unicornStatement['days'], unicornLying, unicornPositive, unicornNegative, unicornDays)
@@ -143,19 +142,20 @@ def jsonForPuzzle(puzzle):
 counter = 0
 validPuzzles = []
 for s1 in allAnnotated:
-	for s2 in allAnnotated:
-		counter = counter + 1
-		puzzle = validPuzzle(s1,s2,counter)
-		if(len(puzzle) > 0):
-			validPuzzles.append(jsonForPuzzle(puzzle))
+    for s2 in allAnnotated:
+        puzzle = validPuzzle(s1,s2)        
+        if(len(puzzle) > 0):
+            counter = counter + 1
+            puzzle['id'] = counter
+            validPuzzles.append(jsonForPuzzle(puzzle))
 result = "["
 first = True
 for p in validPuzzles:
-	if not first:
-		result += ", \n"
-	else:
-		first = False
-	result += p
+    if not first:
+        result += ", \n"
+    else:
+        first = False
+    result += p
 result += "]"
 
 f = open("../data/forest.json","w")
