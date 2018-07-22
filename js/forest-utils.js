@@ -14,7 +14,6 @@ function getQueryParameter(url, key){
 }
 
 
-
 function removeElement(array, e) {
 	let newArray = [];
 	let x;
